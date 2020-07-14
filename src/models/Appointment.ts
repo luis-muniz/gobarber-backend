@@ -1,15 +1,15 @@
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity('appointments')
 class Appointment {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('varchar')
   provider: string;
 
+  @Column('time with time zone')
   date: Date;
-
-  constructor(id: string, provider: string, date: Date) {
-    this.id = id;
-    this.provider = provider;
-    this.date = date;
-  }
 }
 
 export default Appointment;
