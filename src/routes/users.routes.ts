@@ -26,17 +26,13 @@ usersRoutes.patch(
   ensureAuthenticated,
   uploadAvatar.single('avatar'),
   async (request, response) => {
-    try {
-      const updateAvatarUserService = new UpdateAvatarUserService();
-      const user = await updateAvatarUserService.execute({
-        user_id: request.user.id,
-        avatarFileName: request.file.filename,
-      });
+    const updateAvatarUserService = new UpdateAvatarUserService();
+    const user = await updateAvatarUserService.execute({
+      user_id: request.user.id,
+      avatarFileName: request.file.filename,
+    });
 
-      return response.json(user);
-    } catch (error) {
-      return response.json({ message: error.message });
-    }
+    return response.json(user);
   },
 );
 

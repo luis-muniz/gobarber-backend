@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   email: string;
@@ -24,13 +25,13 @@ class CreateSessionService {
     });
 
     if (!findUserEmail) {
-      throw new Error('Invalid e-mail/password.');
+      throw new AppError('Invalid e-mail/password.', 401);
     }
 
     const checkUserPassword = await compare(password, findUserEmail.password);
 
     if (!checkUserPassword) {
-      throw new Error('Invalid e-mail/password.');
+      throw new AppError('Invalid e-mail/password.', 401);
     }
 
     delete findUserEmail.password;

@@ -2,6 +2,7 @@ import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import Appointment from '../models/Appointment';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   provider_id: string;
@@ -20,7 +21,7 @@ class CreateAppointmentService {
     );
 
     if (findAppointmentInSameDate) {
-      throw new Error('There is already an appointment at that time.');
+      throw new AppError('There is already an appointment at that time.');
     }
 
     const appointment = appointmentsRepository.create({
